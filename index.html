@@ -25,9 +25,9 @@
           changetitle();
         };
         let question_bank_json = '[\
-        {"title":"2011年第一天下午知识单选题", "contant":"<br>27、游泳池运行过程中需要加热时，其设计耗热量应以下列那项为计算依据：</><br>A：池水表面蒸发损失热量的1.2倍与补充新鲜水加热所需热量之和</><br>B：池水初次加热时所需的热量</>　<br>C：游泳池溢流水和过滤设备反冲洗时排水损失的热量</><br>D：池水表面蒸发损失热量、补充新鲜水加热需热量、管道和池壁损失热量之和</>　","answer":"#"},\
-        {"title":"2007年第一天上午知识单选题", "contant":"<br>61、下列有关泳池氯消毒的叙述那几项是错误的：</><br>A：氯消毒剂宜优选次氯酸钠，特别是成品次氯酸钠消毒剂</><br>B：次氯酸钠杀菌效果好，但不能降低池水中有机物的含量</><br>C：使用氯气消毒会使池水中的pH值升高，使用次氯酸钠消毒会使池水中的pH值降低</><br>D：小型游泳池宜采用氯片消毒，使用简便，可直接投入池水中</>　","answer":"#"},\
-        {"title":"2014年第一天上午知识单选题", "contant":"<br>28、对于游泳池的净化处理工艺，下列那种说法不正确：</><br>A：硅藻土过滤器的过滤精度优于石英砂过滤</><br>B：泳池可利用市政自来水进行反冲洗</><br>C：利用泳池水进行反冲洗有利于改善泳池水质</><br>D：过滤器反冲洗水泵应设置备用泵</>","answer":"#"}\
+        {"title":"2011年第一天下午知识单选题", "content":"<br>27、游泳池运行过程中需要加热时，其设计耗热量应以下列那项为计算依据：</><br>A：池水表面蒸发损失热量的1.2倍与补充新鲜水加热所需热量之和</><br>B：池水初次加热时所需的热量</>　<br>C：游泳池溢流水和过滤设备反冲洗时排水损失的热量</><br>D：池水表面蒸发损失热量、补充新鲜水加热需热量、管道和池壁损失热量之和</>　","answer":"#"},\
+        {"title":"2007年第一天上午知识单选题", "content":"<br>61、下列有关泳池氯消毒的叙述那几项是错误的：</><br>A：氯消毒剂宜优选次氯酸钠，特别是成品次氯酸钠消毒剂</><br>B：次氯酸钠杀菌效果好，但不能降低池水中有机物的含量</><br>C：使用氯气消毒会使池水中的pH值升高，使用次氯酸钠消毒会使池水中的pH值降低</><br>D：小型游泳池宜采用氯片消毒，使用简便，可直接投入池水中</>　","answer":"#"},\
+        {"title":"2014年第一天上午知识单选题", "content":"<br>28、对于游泳池的净化处理工艺，下列那种说法不正确：</><br>A：硅藻土过滤器的过滤精度优于石英砂过滤</><br>B：泳池可利用市政自来水进行反冲洗</><br>C：利用泳池水进行反冲洗有利于改善泳池水质</><br>D：过滤器反冲洗水泵应设置备用泵</>","answer":"#"}\
         ]';
         var questions = JSON.parse(question_bank_json);
         function changetitle(){
@@ -39,10 +39,14 @@
             new_a.appendChild(new_text);
             document.getElementById("nav-mobile").appendChild(new_li);
             new_li.setAttribute("class", "bold");
-            new_a.setAttribute("href", "");
+            new_a.setAttribute("href", "#");
+            new_a.setAttribute("onclick", "showQuestion(" + i + ")");
             new_a.setAttribute("class", "waves-effect waves-teal");
           };
-        }    
+        };
+        function showQuestion(no){
+          document.getElementById("question_content").innerHTML = questions[no].content;
+        }   
         
       </script> 
     </head>
@@ -69,7 +73,7 @@
               <div class="card grey darken-1">
                 <div class="card-content white-text">
                   <span class="card-title">题面：</span>
-                  <p>
+                  <p id="question_content">
 
                   </p>
                 </div>
