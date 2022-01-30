@@ -50,14 +50,25 @@
           };
         };
         function showQuestion(no){
-          document.getElementById("question_content").innerHTML = questions[no].content;
+          let question_content_p = document.getElementById("question_content");
+          question_content_p.innerHTML = questions[no].content;
           if(no != 0){
               document.getElementById("lastQuestion").setAttribute("onclick", "showQuestion("+ (no - 1) +")");  
             };
           if(no != questions.length){
               document.getElementById("nextQuestion").setAttribute("onclick", "showQuestion("+ (no + 1) +")");  
             }
-
+          let as_in_questions = question_content_p.getElementsByTagName("a");
+          let imgs_in_questions = question_content_p.getElementsByTagName("img");
+          let i;
+          for (i = 0; i < as_in_questions.length; i++) {
+            let href_text = as_in_questions[i].getAttribute("href");
+            as_in_questions[i].setAttribute("href", "data/" + href_text);
+          }
+          for (i = 0; i < imgs_in_questions.length; i++) {
+            let src_text = imgs_in_questions[i].getAttribute("src");
+            imgs_in_questions[i].setAttribute("src", "data/" + src_text);
+          }
         }   
         
       </script> 
