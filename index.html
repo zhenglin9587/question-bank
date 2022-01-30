@@ -47,6 +47,13 @@
         };
         function showQuestion(no){
           document.getElementById("question_content").innerHTML = questions[no].content;
+          if(no != 0){
+              document.getElementById("lastQuestion").setAttribute("onclick", "showQuestion("+ (no - 1) +")");  
+            };
+          if(no != questions.length){
+              document.getElementById("nextQuestion").setAttribute("onclick", "showQuestion("+ (no + 1) +")");  
+            }
+
         }   
         
       </script> 
@@ -59,8 +66,10 @@
           <div class="nav-wrapper"><a class="page-title">题库</a></div>
           </div>
         </nav>  
-        <div class="container"><a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only">
-          <i class="material-icons">menu</i></a>
+        <div class="container">
+          <a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only">
+            <i class="material-icons">menu</i>
+          </a>
         </div>
 
         <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(-100%);"></ul>
@@ -73,7 +82,13 @@
             <div class="col s12">
               <div class="card grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title">题面：</span>
+                  <div class="container center-align">
+                    <div class="row white-text">
+                      <div class="col s5"><a id="lastQuestion" href="#" class="waves-effect waves-light btn">上一题</a></div> 
+                      <div class="col s2"></div>   
+                      <div class="col s5"><a id="nextQuestion" href="#" class="waves-effect waves-light btn">下一题</a></div>  
+                    </div>
+                    <div class="row"></div>
                   <p id="question_content">
 
                   </p>
@@ -81,13 +96,6 @@
                 <div class="card-action">
                   <a href="#" class="waves-effect waves-light btn">答案解析</a>
                 </div>
-                <div class="container center-align">
-                  <div class="row white-text">
-                    <div class="col s5"><a href="#" class="waves-effect waves-light btn">上一题</a></div>  
-                    <div class="col s2"></div>   
-                    <div class="col s5"><a href="#" class="waves-effect waves-light btn">下一题</a></div>  
-                  </div>
-                  <div class="row"></div>
                 </div>
               </div>
             </div>
