@@ -68,6 +68,7 @@
           for (i = 0; i < imgs_in_questions.length; i++) {
             let src_text = imgs_in_questions[i].getAttribute("src");
             imgs_in_questions[i].setAttribute("src", "data/" + src_text);
+            imgs_in_questions[i].setAttribute("class", "responsive-img");
           }
         }   
         
