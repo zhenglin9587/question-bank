@@ -49,6 +49,14 @@
             new_a.setAttribute("class", "waves-effect waves-teal");
           };
         };
+        function change_img(){
+          var x = document.getElementById("question_content");
+          var y = x.getElementsByTagName("img");
+          for(i = 0; i < y.length; i++){
+            y[i].setAttribute("src", "data/"+y[i].getAttribute("src"));
+            y[i].classList.add("responsive-img");
+          }
+        }
         function showQuestion(no){
           document.getElementById("question_content").innerHTML = questions[no].content;
           if(no != 0){
@@ -57,7 +65,7 @@
           if(no != questions.length){
               document.getElementById("nextQuestion").setAttribute("onclick", "showQuestion("+ (no + 1) +")");  
             }
-
+            change_img();
         }   
         
       </script> 
