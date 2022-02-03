@@ -1,139 +1,172 @@
-   <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8" />
-      <link href="css/icons.css" rel="stylesheet" />
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <style> 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link href="css/icons.css" rel="stylesheet" />
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style> 
+      header, main, footer {
+        padding-left: 300px;
+      }
+
+      @media only screen and (max-width : 992px) {
         header, main, footer {
-          padding-left: 300px;
+          padding-left: 0;
         }
-
-        @media only screen and (max-width : 992px) {
-          header, main, footer {
-            padding-left: 0;
-          }
-        }
-        a.page-title {
-          font-size: 36px;
-        }
-      </style>
-      <script>
-        function init(){
-          $(".button-collapse").sideNav();
-          changetitle();
-          $(document).ready(function(){
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal').modal();
-          });
-          showQuestion(0);
+      }
+      a.page-title {
+        font-size: 36px;
+      }
+    </style>
+    <script>
+      function init(){
+        $(".button-collapse").sideNav();
+        changetitle();
+        $(document).ready(function(){
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal').modal();
+        });
+        showQuestion(0);
+      };
+      let question_bank_json = '[\
+      {"title": "2011年第一天下午知识单选题", "content": "<br>27、游泳池运行过程中需要加热时，其设计耗热量应以下列那项为计算依据：</><br>A：池水表面蒸发损失热量的1.2倍与补充新鲜水加热所需热量之和</><br>B：池水初次加热时所需的热量</>　<br>C：游泳池溢流水和过滤设备反冲洗时排水损失的热量</><br>D：池水表面蒸发损失热量、补充新鲜水加热需热量、管道和池壁损失热量之和</>　","answer":"#"},\
+      {"title": "2007年第一天上午知识单选题", "content": "<br>61、下列有关泳池氯消毒的叙述那几项是错误的：</><br>A：氯消毒剂宜优选次氯酸钠，特别是成品次氯酸钠消毒剂</><br>B：次氯酸钠杀菌效果好，但不能降低池水中有机物的含量</><br>C：使用氯气消毒会使池水中的pH值升高，使用次氯酸钠消毒会使池水中的pH值降低</><br>D：小型游泳池宜采用氯片消毒，使用简便，可直接投入池水中</>　","answer":"#"},\
+      {"title": "2014年第一天上午知识单选题", "content": "<br>28、对于游泳池的净化处理工艺，下列那种说法不正确：</><br>A：硅藻土过滤器的过滤精度优于石英砂过滤</><br>B：泳池可利用市政自来水进行反冲洗</><br>C：利用泳池水进行反冲洗有利于改善泳池水质</><br>D：过滤器反冲洗水泵应设置备用泵</>","answer":"#"},\
+      {"title": "2013年第一天下午知识单选题", "content": "<br>1、在下列那种情况下，城镇配水管网设计可考虑增大管网漏损率：</><br>A：供水规模较大时</><br>B：供水压力较低时</><br>C：管材材质较好时</><br>D：单位管长供水量较小时</><br><a href=\'20131201.txt\'>答案及解析</a></>"},\
+      {"title": "2019年第二天上午案例题", "content": "<br>1、某城市总体规划修订后，确定的相关指标见下表：</><br><img src=\'192101.png\'></><br>近期内在现有设计规模为5万m³的自来水厂基础上进行扩建以满足需求，试计算自来水厂扩建需增加的设计规模(m³/d)。(注:管网漏损率均按10％计，消防用水量均按1000m³计，未预见水量均按10%计，水厂自用水量均按水厂设计规模的5％计)</><br>A：90602　B：43170　C：33738　D：28650</><br><a href=\'20192101.txt\'>答案及解析</a>：【　】</>"},\
+      {"title": "2013年第二天下午案例题", "content": "<br>2、某城市最高日各时段用水量占全日设计供水量的百分数见下表。其二级泵站分二级供水，其中：一级供水时段为当日20时至次日6时，一级供水时段二级泵站每小时设计供水量占全日设计供水量的百分比为2.44％，其他时段均采用二级供水，二级供水时段二级泵站每小时设计供水量占全日设计供水量的百分比为5.40％，则管网内高地水池有效调节容积占全日设计供水量的百分比应不小于下列哪项：<img src=\'132102.png\'></>\<br>A：1.36%　B：2.72%　C：3.04%　D：5.04%</>\<br><a href=\'20132102.png\'>答案及解析</a>：【　】</>"}\
+    ]';
+      var questions = JSON.parse(question_bank_json);
+      function changetitle(){
+        for(i = 0; i < questions.length; i++){
+          let new_li = document.createElement("li");
+          let new_a = document.createElement("a");
+          let new_text = document.createTextNode(questions[i].title);
+          new_li.appendChild(new_a);
+          new_a.appendChild(new_text);
+          document.getElementById("nav-mobile").appendChild(new_li);
+          new_li.setAttribute("class", "bold");
+          new_a.setAttribute("href", "#");
+          new_a.setAttribute("onclick", "showQuestion(" + i + ")");
+          new_a.setAttribute("class", "waves-effect waves-teal");
         };
-        let question_bank_json = '[\
-        {"title": "2011年第一天下午知识单选题", "content": "<br>27、游泳池运行过程中需要加热时，其设计耗热量应以下列那项为计算依据：</><br>A：池水表面蒸发损失热量的1.2倍与补充新鲜水加热所需热量之和</><br>B：池水初次加热时所需的热量</>　<br>C：游泳池溢流水和过滤设备反冲洗时排水损失的热量</><br>D：池水表面蒸发损失热量、补充新鲜水加热需热量、管道和池壁损失热量之和</>　","answer":"#"},\
-        {"title": "2007年第一天上午知识单选题", "content": "<br>61、下列有关泳池氯消毒的叙述那几项是错误的：</><br>A：氯消毒剂宜优选次氯酸钠，特别是成品次氯酸钠消毒剂</><br>B：次氯酸钠杀菌效果好，但不能降低池水中有机物的含量</><br>C：使用氯气消毒会使池水中的pH值升高，使用次氯酸钠消毒会使池水中的pH值降低</><br>D：小型游泳池宜采用氯片消毒，使用简便，可直接投入池水中</>　","answer":"#"},\
-        {"title": "2014年第一天上午知识单选题", "content": "<br>28、对于游泳池的净化处理工艺，下列那种说法不正确：</><br>A：硅藻土过滤器的过滤精度优于石英砂过滤</><br>B：泳池可利用市政自来水进行反冲洗</><br>C：利用泳池水进行反冲洗有利于改善泳池水质</><br>D：过滤器反冲洗水泵应设置备用泵</>","answer":"#"},\
-        {"title": "2013年第一天下午知识单选题", "content": "<br>1、在下列那种情况下，城镇配水管网设计可考虑增大管网漏损率：</><br>A：供水规模较大时</><br>B：供水压力较低时</><br>C：管材材质较好时</><br>D：单位管长供水量较小时</><br><a href=\'20131201.txt\'>答案及解析</a></>"},\
-        {"title": "2019年第二天上午案例题", "content": "<br>1、某城市总体规划修订后，确定的相关指标见下表：</><br><img src=\'192101.png\'></><br>近期内在现有设计规模为5万m³的自来水厂基础上进行扩建以满足需求，试计算自来水厂扩建需增加的设计规模(m³/d)。(注:管网漏损率均按10％计，消防用水量均按1000m³计，未预见水量均按10%计，水厂自用水量均按水厂设计规模的5％计)</><br>A：90602　B：43170　C：33738　D：28650</><br><a href=\'20192101.txt\'>答案及解析</a>：【　】</>"},\
-        {"title": "2013年第二天下午案例题", "content": "<br>2、某城市最高日各时段用水量占全日设计供水量的百分数见下表。其二级泵站分二级供水，其中：一级供水时段为当日20时至次日6时，一级供水时段二级泵站每小时设计供水量占全日设计供水量的百分比为2.44％，其他时段均采用二级供水，二级供水时段二级泵站每小时设计供水量占全日设计供水量的百分比为5.40％，则管网内高地水池有效调节容积占全日设计供水量的百分比应不小于下列哪项：<img src=\'132102.png\'></>\<br>A：1.36%　B：2.72%　C：3.04%　D：5.04%</>\<br><a href=\'20132102.png\'>答案及解析</a>：【　】</>"}\
-      ]';
-        var questions = JSON.parse(question_bank_json);
-        function changetitle(){
-          for(i = 0; i < questions.length; i++){
-            let new_li = document.createElement("li");
-            let new_a = document.createElement("a");
-            let new_text = document.createTextNode(questions[i].title);
-            new_li.appendChild(new_a);
-            new_a.appendChild(new_text);
-            document.getElementById("nav-mobile").appendChild(new_li);
-            new_li.setAttribute("class", "bold");
-            new_a.setAttribute("href", "#");
-            new_a.setAttribute("onclick", "showQuestion(" + i + ")");
-            new_a.setAttribute("class", "waves-effect waves-teal");
+      };
+      function change_img(){
+        var x = document.getElementById("question_content");
+        var y = x.getElementsByTagName("img");
+        for(i = 0; i < y.length; i++){
+          y[i].setAttribute("src", "data/"+y[i].getAttribute("src"));
+          y[i].classList.add("responsive-img");
+        }
+      }
+      function showQuestion(no){
+        document.getElementById("question_content").innerHTML = questions[no].content;
+        if(no != 0){
+            document.getElementById("lastQuestion").setAttribute("onclick", "showQuestion("+ (no - 1) +")");  
           };
-        };
-        function change_img(){
-          var x = document.getElementById("question_content");
-          var y = x.getElementsByTagName("img");
-          for(i = 0; i < y.length; i++){
-            y[i].setAttribute("src", "data/"+y[i].getAttribute("src"));
-            y[i].classList.add("responsive-img");
+        if(no != questions.length){
+            document.getElementById("nextQuestion").setAttribute("onclick", "showQuestion("+ (no + 1) +")");  
           }
-        }
-        function showQuestion(no){
-          document.getElementById("question_content").innerHTML = questions[no].content;
-          if(no != 0){
-              document.getElementById("lastQuestion").setAttribute("onclick", "showQuestion("+ (no - 1) +")");  
-            };
-          if(no != questions.length){
-              document.getElementById("nextQuestion").setAttribute("onclick", "showQuestion("+ (no + 1) +")");  
-            }
-            change_img();
-        }   
-        
-      </script> 
-    </head>
+          change_img();
+          loadDoc();
+      }   
+      
+    </script> 
+  </head>
 
-    <body onload="init()">
-      <header>
-        <nav class="top-nav">
-          <div class="container">
-          <div class="nav-wrapper">
-            <a class="page-title">题库</a>
-            <a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only">
-              <i class="material-icons">menu</i>
-            </a>
-          </div>
-          </div>
-        </nav>  
-        <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(-100%);"></ul>
-
-
-      </header>
-      <main>
+  <body onload="init()">
+    <header>
+      <nav class="top-nav">
         <div class="container">
-          <div class="row">
-            <div class="col s12">
-              <div class="card grey darken-1">
-                <div class="card-content white-text">
-                  <div class="container center-align">
-                    <div class="row white-text">
-                      <div class="col s5"><a id="lastQuestion" href="#" class="waves-effect waves-light btn">上一题</a></div> 
-                      <div class="col s2"></div>   
-                      <div class="col s5"><a id="nextQuestion" href="#" class="waves-effect waves-light btn">下一题</a></div>  
-                    </div>
-                    <div class="row"></div>
-                    <div class="row">
-                      <div class="col s12 left-align">
-                        <p id="question_content"></p>
-                      </div>
-                    </div>
-                </div>
-                <div class="card-action">
-                    <!-- Modal Trigger -->
-                <a class="waves-effect waves-light btn" href="#modal1">答案及解析</a>
+        <div class="nav-wrapper">
+          <a class="page-title">题库</a>
+          <a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle hide-on-large-only">
+            <i class="material-icons">menu</i>
+          </a>
+        </div>
+        </div>
+      </nav>  
+      <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(-100%);"></ul>
 
-                <!-- Modal Structure -->
-                <div id="modal1" class="modal">
-                  <div class="modal-content black-text">
-                    <h4>模态标题</h4>
-                    <p>一堆文本</p>
+
+    </header>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <div class="card grey darken-1">
+              <div class="card-content white-text">
+                <div class="container center-align">
+                  <div class="row white-text">
+                    <div class="col s5"><a id="lastQuestion" href="#" class="waves-effect waves-light btn">上一题</a></div> 
+                    <div class="col s2"></div>   
+                    <div class="col s5"><a id="nextQuestion" href="#" class="waves-effect waves-light btn">下一题</a></div>  
                   </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">同意</a>
+                  <div class="row"></div>
+                  <div class="row">
+                    <div class="col s12 left-align">
+                      <p id="question_content"></p>
+                    </div>
                   </div>
+              </div>
+              <div class="card-action">
+                  <!-- Modal Trigger -->
+              <a class="waves-effect waves-light btn" href="#modal1">答案及解析</a>
+
+              <!-- Modal Structure -->
+              <div id="modal1" class="modal">
+                <div class="modal-content black-text">
+                  <p id = "modal_answer"></p>
+                  
                 </div>
-                </div>
-                </div>
+                <script>
+
+                  
+                    function loadDoc() {
+                      var x = document.getElementById("question_content");
+                      var y = x.getElementsByTagName("a");
+                      var z = y[0].getAttribute("href");
+                      if(y.length == 0){
+                        return;
+                      }
+                      function checkImg(){undefined
+                      var img_id=z; //根据id得到值
+                      var index= img_id.lastIndexOf("."); //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+                      img_id=img_id.substring(index); //截断"."之前的，得到后缀
+                          if(img_id!=".txt"){  //根据后缀，判断是否符合图片格式
+                            document.getElementById("modal_answer").innerHTML ="";
+                            let new_img = document.createElement("img");
+                            document.getElementById("modal_answer").appendChild(new_img);
+                            new_img.setAttribute("src", "data/"+z);
+                            }
+                          else{
+                           
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                              if (this.readyState == 4 && this.status == 200) {
+                                document.getElementById("modal_answer").innerHTML = this.responseText;
+                              }
+                            };
+                            xhttp.open("GET", "data/"+z, true);
+                            xhttp.send();
+                          }
+                      } 
+                      checkImg();
+                    }
+                    </script>
+              </div>
+              </div>
               </div>
             </div>
           </div>
         </div>
-      </main>  
-      <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-    </body>
-  </html>
+      </div>
+    </main>  
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+  </body>
+</html>
