@@ -128,10 +128,11 @@
                     function loadDoc() {
                       var x = document.getElementById("question_content");
                       var y = x.getElementsByTagName("a");
-                      var z = y[0].getAttribute("href");
+                      
                       if(y.length == 0){
                         return;
                       }
+                      var z = y[0].getAttribute("href");
                       function checkImg(){undefined
                       var img_id=z; //根据id得到值
                       var index= img_id.lastIndexOf("."); //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
@@ -140,8 +141,11 @@
                             document.getElementById("modal_answer").innerHTML ="";
                             let new_img = document.createElement("img");
                             document.getElementById("modal_answer").appendChild(new_img);
-                            new_img.setAttribute("src", "data/"+z);
+                            new_img.setAttribute("src", "data/"+z);          
+                            new_img.setAttribute("class", "responsive-img");
+
                             }
+                            
                           else{
                            
                             var xhttp = new XMLHttpRequest();
